@@ -16,6 +16,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "PRIVATE_KEY", "\"770bc2350a8e2c9c6ca701fda95335285b60dbba\""
+        buildConfigField "String", "PUBLIC_KEY", "\"9112081d7fe08ff4d3e618b96c0439fc\""
     }
 
     buildTypes {
@@ -31,7 +34,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures{
+    buildFeatures {
         dataBinding true
     }
 }
@@ -53,4 +56,5 @@ dependencies {
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 }

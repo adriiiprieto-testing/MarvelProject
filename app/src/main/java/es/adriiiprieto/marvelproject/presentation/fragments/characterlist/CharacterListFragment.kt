@@ -18,6 +18,7 @@ class CharacterListFragment : Fragment() {
 
         binding = FragmentCharacterListBinding.inflate(layoutInflater, container, false)
 
+        viewModel.requestInformation()
 
         return binding.root
 
