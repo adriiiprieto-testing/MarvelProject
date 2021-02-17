@@ -54,9 +54,9 @@ class MarvelNetwork {
     }
 
 
-    suspend fun getAllCharacters(): ResponseAllCharactersDataModel {
+    suspend fun getAllCharacters(limit: Int): ResponseAllCharactersDataModel {
         loadRetrofit()
-        return service.getAllCharacters()
+        return service.getAllCharacters(limit)
     }
 
 
