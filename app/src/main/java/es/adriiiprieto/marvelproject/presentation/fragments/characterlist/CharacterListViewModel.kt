@@ -1,16 +1,32 @@
 package es.adriiiprieto.marvelproject.presentation.fragments.characterlist
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import es.adriiiprieto.marvelproject.base.BaseState
 import es.adriiiprieto.marvelproject.data.MarvelRepository
 import kotlinx.coroutines.launch
 
-class CharacterListViewModel: ViewModel() {
+class CharacterListViewModel : ViewModel() {
 
-    fun requestInformation() {
+    private val state = MutableLiveData<BaseState>()
+    fun getState(): LiveData<BaseState> = state
+
+    fun requestInformation(limit: Int = 20) {
+        state.postValue(BaseState.Loading())
         viewModelScope.launch {
-            MarvelRepository().getAllCharacters()
+            try {
+                val response = MarvelRepository().getAllCharacters(limit)
+                state.postValue(BaseState.Normal(CharacterListState(response)))
+            } catch (e: Exception) {
+                state.postValue(BaseState.Error(e))
+            }
         }
+    }
+
+    fun onActionChangeSpinnerValue(limit: String) {
+        requestInformation(limit.toInt())
     }
 
 }
