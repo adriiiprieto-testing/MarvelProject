@@ -1,7 +1,6 @@
 package es.adriiiprieto.marvelproject.presentation.fragments.characterlist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,12 +64,14 @@ class CharacterListFragment : Fragment() {
 
         binding.fragmentCharacterListSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-                viewModel.onActionChangeSpinnerValue(parent.getItemAtPosition(pos).toString())
+                if (pos == 0) {
+                    viewModel.onActionChangeSpinnerValue(20.toString())
+                } else {
+                    viewModel.onActionChangeSpinnerValue(parent.getItemAtPosition(pos).toString())
+                }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
