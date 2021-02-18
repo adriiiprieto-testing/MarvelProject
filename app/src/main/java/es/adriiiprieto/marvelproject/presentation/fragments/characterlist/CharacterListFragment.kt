@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import es.adriiiprieto.marvelproject.R
@@ -48,7 +49,7 @@ class CharacterListFragment : Fragment() {
     private fun setupView() {
         // Setup recycler view
         mAdapter = CharacterListAdapter(listOf(), requireActivity()) { character ->
-            Toast.makeText(requireActivity(), character.name, Toast.LENGTH_SHORT).show()
+            findNavController().navigate(CharacterListFragmentDirections.actionCharacterListFragmentToCharacterDetailFragment(character.id))
         }
         binding.fragmentCharacterListRecyclerView.apply {
             adapter = mAdapter
