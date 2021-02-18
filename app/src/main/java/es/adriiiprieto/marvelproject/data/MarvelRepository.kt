@@ -9,4 +9,11 @@ class MarvelRepository {
         return MarvelNetwork().getAllCharacters(limit).data.results
     }
 
+    suspend fun getCharacter(characterId: Int): Character {
+        val response = MarvelNetwork().getCharacter(characterId)
+        val response2 = response.data.results
+        return if (response2.isNotEmpty()) response2[0] else throw NoCharacterException()
+    }
 }
+
+class NoCharacterException : Exception()
