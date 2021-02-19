@@ -9,6 +9,8 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.tabs.TabLayoutMediator
+import es.adriiiprieto.marvelproject.R
 import es.adriiiprieto.marvelproject.base.BaseExtraData
 import es.adriiiprieto.marvelproject.base.BaseState
 import es.adriiiprieto.marvelproject.data.NoCharacterException
@@ -44,7 +46,6 @@ class CharacterDetailFragment : Fragment() {
     }
 
     private fun setupView() {
-
     }
 
     private fun onError(dataError: Throwable) {
@@ -76,6 +77,18 @@ class CharacterDetailFragment : Fragment() {
                     }
                 }
             }
+
+
+            binding.characterDetailFragmentViewPager.adapter = CharacterDetailViewPagerAdapter(this, character)
+            TabLayoutMediator(binding.characterDetailFragmentTabLayout, binding.characterDetailFragmentViewPager) { tab, position ->
+                tab.text = when(position){
+                    0 -> getString(R.string.CharacterDetailFragmentTabTitleComics)
+                    1 -> getString(R.string.CharacterDetailFragmentTabTitleSeries)
+                    2 -> getString(R.string.CharacterDetailFragmentTabTitleStories)
+                    else -> ""
+                }
+            }.attach()
+
         }
     }
 
