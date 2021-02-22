@@ -5,10 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import es.adriiiprieto.marvelproject.base.BaseState
+import es.adriiiprieto.marvelproject.base.BaseViewModel
 import es.adriiiprieto.marvelproject.data.MarvelRepository
 import kotlinx.coroutines.launch
 
-class CharacterDetailViewModel : ViewModel() {
+class CharacterDetailViewModel : BaseViewModel() {
 
     private val state = MutableLiveData<BaseState>()
     fun getState(): LiveData<BaseState> = state

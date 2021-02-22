@@ -6,31 +6,45 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayoutMediator
 import es.adriiiprieto.marvelproject.R
 import es.adriiiprieto.marvelproject.base.BaseExtraData
+import es.adriiiprieto.marvelproject.base.BaseFragment
 import es.adriiiprieto.marvelproject.base.BaseState
 import es.adriiiprieto.marvelproject.data.NoCharacterException
 import es.adriiiprieto.marvelproject.databinding.CharacterDetailFragmentBinding
 
 
-class CharacterDetailFragment : Fragment() {
+class CharacterDetailFragment : BaseFragment<CharacterDetailViewModel, CharacterDetailFragmentBinding>() {
 
-    private val viewModel: CharacterDetailViewModel by viewModels()
+    /**
+     * Base variables
+     */
+    override val viewModelClass = CharacterDetailViewModel::class.java
 
-    lateinit var binding: CharacterDetailFragmentBinding
+    private lateinit var vm: CharacterDetailViewModel
 
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> CharacterDetailFragmentBinding = CharacterDetailFragmentBinding::inflate
+
+    /**
+     * Base functions
+     */
+    override fun setupView(viewModel: CharacterDetailViewModel) {
+        vm = viewModel
+    }
+
+
+
+    /**
+     * Old to remove
+     */
     private val args: CharacterDetailFragmentArgs by navArgs()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding = CharacterDetailFragmentBinding.inflate(inflater, container, false)
-
-        viewModel.getState().observe(viewLifecycleOwner, { state ->
+        vm.getState().observe(viewLifecycleOwner, { state ->
             when (state) {
                 is BaseState.Normal -> onNormal(state.data as CharacterDetailState)
                 is BaseState.Loading -> onLoading(state.dataLoading)
@@ -38,14 +52,9 @@ class CharacterDetailFragment : Fragment() {
             }
         })
 
-        setupView()
-
-        viewModel.requestInformation(args.characterId)
+        vm.requestInformation(args.characterId)
 
         return binding.root
-    }
-
-    private fun setupView() {
     }
 
     private fun onError(dataError: Throwable) {
@@ -81,7 +90,7 @@ class CharacterDetailFragment : Fragment() {
 
             binding.characterDetailFragmentViewPager.adapter = CharacterDetailViewPagerAdapter(this, character)
             TabLayoutMediator(binding.characterDetailFragmentTabLayout, binding.characterDetailFragmentViewPager) { tab, position ->
-                tab.text = when(position){
+                tab.text = when (position) {
                     0 -> getString(R.string.CharacterDetailFragmentTabTitleComics)
                     1 -> getString(R.string.CharacterDetailFragmentTabTitleSeries)
                     2 -> getString(R.string.CharacterDetailFragmentTabTitleStories)
@@ -91,5 +100,7 @@ class CharacterDetailFragment : Fragment() {
 
         }
     }
+
+
 
 }

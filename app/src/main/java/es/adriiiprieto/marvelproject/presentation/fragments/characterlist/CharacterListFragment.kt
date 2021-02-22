@@ -6,47 +6,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import es.adriiiprieto.marvelproject.R
 import es.adriiiprieto.marvelproject.base.BaseExtraData
+import es.adriiiprieto.marvelproject.base.BaseFragment
 import es.adriiiprieto.marvelproject.base.BaseState
 import es.adriiiprieto.marvelproject.databinding.FragmentCharacterListBinding
 
-class CharacterListFragment : Fragment() {
+class CharacterListFragment : BaseFragment<CharacterListViewModel, FragmentCharacterListBinding>() {
 
-    lateinit var binding: FragmentCharacterListBinding
+    /**
+     * Base classes variables
+     */
+    override val viewModelClass = CharacterListViewModel::class.java
 
-    val viewModel: CharacterListViewModel by viewModels()
+    lateinit var vm: CharacterListViewModel
 
-    lateinit var mAdapter: CharacterListAdapter
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
-        binding = FragmentCharacterListBinding.inflate(layoutInflater, container, false)
-
-        viewModel.getState().observe(viewLifecycleOwner, { state ->
-            when (state) {
-                is BaseState.Normal -> onNormal(state.data as CharacterListState)
-                is BaseState.Loading -> onLoading(state.dataLoading)
-                is BaseState.Error -> onError(state.dataError)
-            }
-        })
-
-        setupView()
-
-        viewModel.requestInformation()
-
-        return binding.root
-
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCharacterListBinding = FragmentCharacterListBinding::inflate
 
 
-    private fun setupView() {
+
+    /**
+     * Base class methods
+     */
+    override fun setupView(viewModel: CharacterListViewModel) {
+        vm = viewModel
+
         // Setup recycler view
         mAdapter = CharacterListAdapter(listOf(), requireActivity()) { character ->
             findNavController().navigate(CharacterListFragmentDirections.actionCharacterListFragmentToCharacterDetailFragment(character.id))
@@ -66,15 +53,38 @@ class CharacterListFragment : Fragment() {
         binding.fragmentCharacterListSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
                 if (pos == 0) {
-                    viewModel.onActionChangeSpinnerValue(20.toString())
+                    vm.onActionChangeSpinnerValue(20.toString())
                 } else {
-                    viewModel.onActionChangeSpinnerValue(parent.getItemAtPosition(pos).toString())
+                    vm.onActionChangeSpinnerValue(parent.getItemAtPosition(pos).toString())
                 }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
+
+
+    /**
+     * Old methods
+     */
+
+    lateinit var mAdapter: CharacterListAdapter
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
+        vm.getState().observe(viewLifecycleOwner, { state ->
+            when (state) {
+                is BaseState.Normal -> onNormal(state.data as CharacterListState)
+                is BaseState.Loading -> onLoading(state.dataLoading)
+                is BaseState.Error -> onError(state.dataError)
+            }
+        })
+
+        vm.requestInformation()
+
+        return binding.root
+    }
+
 
     private fun onNormal(characterListState: CharacterListState) {
         mAdapter.updateList(characterListState.characterList)
@@ -87,5 +97,6 @@ class CharacterListFragment : Fragment() {
     private fun onError(dataError: Throwable) {
 
     }
+
 
 }
