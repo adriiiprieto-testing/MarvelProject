@@ -5,20 +5,26 @@ import es.adriiiprieto.marvelproject.data.MarvelRepository
 
 class CharacterListViewModel : BaseViewModel<CharacterListState>() {
 
-    fun requestInformation(limit: Int = 20) {
+    override val defaultState: CharacterListState = CharacterListState()
+
+    override fun onStartFirstTime() {
+    }
+
+    private fun requestInformation() {
         updateToLoadingState(CharacterListState(listOf()))
 
-        executeCoroutines({
-            val response = MarvelRepository().getAllCharacters(limit)
-
-            updateToNormalState(CharacterListState(response))
-        }, { error ->
-            updateToErrorState(CharacterListState(listOf()), error)
-        })
+        checkDataState { state ->
+            executeCoroutines({
+                val response = MarvelRepository().getAllCharacters(state.limit)
+                updateToNormalState(CharacterListState(response))
+            }, { error ->
+                updateToErrorState(CharacterListState(listOf()), error)
+            })
+        }
     }
 
     fun onActionChangeSpinnerValue(limit: String) {
-        requestInformation(limit.toInt())
+        // TODO: Update state and call request information
+        requestInformation()
     }
-
 }

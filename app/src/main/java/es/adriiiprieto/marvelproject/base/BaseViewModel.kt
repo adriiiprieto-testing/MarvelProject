@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import es.adriiiprieto.marvelproject.presentation.fragments.characterlist.CharacterListState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -15,21 +14,45 @@ abstract class BaseViewModel<VS : BaseViewState> : ViewModel() {
     fun getObservableState(): LiveData<BaseState<VS>> = observableState
 
     /**
+     * On start first time
+     */
+    fun onStart() {
+        if (baseState == null) {
+            baseState = BaseState.Normal(defaultState)
+            onStartFirstTime()
+        }
+        onResume()
+        observableState.postValue(baseState)
+    }
+
+    abstract val defaultState: VS
+
+    abstract fun onStartFirstTime()
+
+    open fun onResume() {}
+
+    /**
      * State management
      */
-    fun updateToNormalState(viewState: VS){
+    fun updateToNormalState(viewState: VS) {
         baseState = BaseState.Normal(viewState)
         observableState.postValue(baseState)
     }
 
-    fun updateToLoadingState(viewState: VS, loadingData: BaseExtraData? = null){
+    fun updateToLoadingState(viewState: VS, loadingData: BaseExtraData? = null) {
         baseState = BaseState.Loading(viewState, loadingData)
         observableState.postValue(baseState)
     }
 
-    fun updateToErrorState(viewState: VS, errorData: Throwable = Throwable()){
+    fun updateToErrorState(viewState: VS, errorData: Throwable = Throwable()) {
         baseState = BaseState.Error(viewState, errorData)
         observableState.postValue(baseState)
+    }
+
+    fun <T> checkDataState(checkDataStateFunction: (VS) -> T): T {
+        return baseState?.let {
+            checkDataStateFunction(it.data)
+        } ?: checkDataStateFunction(defaultState)
     }
 
     /**
@@ -38,7 +61,7 @@ abstract class BaseViewModel<VS : BaseViewState> : ViewModel() {
     fun executeCoroutines(
         block: suspend CoroutineScope.() -> Unit,
         exceptionBlock: suspend CoroutineScope.(Throwable) -> Unit
-    ){
+    ) {
         viewModelScope.launch {
             try {
                 block()
@@ -47,4 +70,6 @@ abstract class BaseViewModel<VS : BaseViewState> : ViewModel() {
             }
         }
     }
+
+
 }

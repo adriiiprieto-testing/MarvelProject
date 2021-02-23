@@ -1,6 +1,5 @@
 package es.adriiiprieto.marvelproject.presentation.fragments.characterlist
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import es.adriiiprieto.marvelproject.R
 import es.adriiiprieto.marvelproject.base.BaseExtraData
 import es.adriiiprieto.marvelproject.base.BaseFragment
-import es.adriiiprieto.marvelproject.base.BaseState
 import es.adriiiprieto.marvelproject.databinding.FragmentCharacterListBinding
 
-class CharacterListFragment : BaseFragment<CharacterListViewModel, FragmentCharacterListBinding>() {
+class CharacterListFragment : BaseFragment<CharacterListState, CharacterListViewModel, FragmentCharacterListBinding>() {
 
     /**
      * Base classes variables
@@ -26,7 +24,10 @@ class CharacterListFragment : BaseFragment<CharacterListViewModel, FragmentChara
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCharacterListBinding = FragmentCharacterListBinding::inflate
 
-
+    /**
+     * Custom variables
+     */
+    lateinit var mAdapter: CharacterListAdapter
 
     /**
      * Base class methods
@@ -63,40 +64,18 @@ class CharacterListFragment : BaseFragment<CharacterListViewModel, FragmentChara
         }
     }
 
-
     /**
-     * Old methods
+     * State management functions
      */
-
-    lateinit var mAdapter: CharacterListAdapter
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
-        vm.getState().observe(viewLifecycleOwner, { state ->
-            when (state) {
-                is BaseState.Normal -> onNormal(state.data as CharacterListState)
-                is BaseState.Loading -> onLoading(state.dataLoading)
-                is BaseState.Error -> onError(state.dataError)
-            }
-        })
-
-        vm.requestInformation()
-
-        return binding.root
+    override fun onNormal(data: CharacterListState) {
+        mAdapter.updateList(data.characterList)
     }
 
-
-    private fun onNormal(characterListState: CharacterListState) {
-        mAdapter.updateList(characterListState.characterList)
-    }
-
-    private fun onLoading(dataLoading: BaseExtraData?) {
+    override fun onLoading(dataLoading: BaseExtraData?) {
 
     }
 
-    private fun onError(dataError: Throwable) {
+    override fun onError(dataError: Throwable) {
 
     }
-
-
 }
