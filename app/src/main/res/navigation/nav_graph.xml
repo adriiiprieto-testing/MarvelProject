@@ -22,6 +22,18 @@
         <argument
             android:name="characterId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_characterDetailFragment_to_comicDetailFragment"
+            app:destination="@id/comicDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/comicDetailFragment"
+        android:name="es.adriiiprieto.marvelproject.presentation.fragments.comicdetail.ComicDetailFragment"
+        android:label="ComicDetailFragment"
+        tools:layout="@layout/comic_detail_fragment" >
+        <argument
+            android:name="comicId"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

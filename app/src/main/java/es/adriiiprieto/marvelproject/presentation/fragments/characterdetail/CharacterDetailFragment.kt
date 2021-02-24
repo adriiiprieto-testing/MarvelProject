@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayoutMediator
 import es.adriiiprieto.marvelproject.R
@@ -56,7 +57,9 @@ class CharacterDetailFragment : BaseFragment<CharacterDetailState, CharacterDeta
                 }
             }
 
-            binding.characterDetailFragmentViewPager.adapter = CharacterDetailViewPagerAdapter(this, character)
+            binding.characterDetailFragmentViewPager.adapter = CharacterDetailViewPagerAdapter(this, character){
+                findNavController().navigate(CharacterDetailFragmentDirections.actionCharacterDetailFragmentToComicDetailFragment(it))
+            }
             TabLayoutMediator(binding.characterDetailFragmentTabLayout, binding.characterDetailFragmentViewPager) { tab, position ->
                 tab.text = when (position) {
                     0 -> getString(R.string.CharacterDetailFragmentTabTitleComics)

@@ -4,6 +4,7 @@ import es.adriiiprieto.marvelproject.BuildConfig
 import es.adriiiprieto.marvelproject.base.util.toMD5
 import es.adriiiprieto.marvelproject.data.model.ResponseAllCharactersDataModel
 import es.adriiiprieto.marvelproject.data.model.ResponseCharacterDataModel
+import es.adriiiprieto.marvelproject.data.model.ResponseGetComicDataModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -63,6 +64,11 @@ class MarvelNetwork {
     suspend fun getCharacter(characterId: Int): ResponseCharacterDataModel {
         loadRetrofit()
         return service.getCharacter(characterId)
+    }
+
+    suspend fun getComic(comicId: Int): ResponseGetComicDataModel {
+        loadRetrofit()
+        return service.getComic(comicId)
     }
 
 
