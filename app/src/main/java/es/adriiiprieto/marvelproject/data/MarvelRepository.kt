@@ -1,6 +1,8 @@
 package es.adriiiprieto.marvelproject.data
 
 import es.adriiiprieto.marvelproject.data.model.Character
+import es.adriiiprieto.marvelproject.data.model.Comic
+import es.adriiiprieto.marvelproject.data.model.ResponseGetComicDataModel
 import es.adriiiprieto.marvelproject.data.network.MarvelNetwork
 
 class MarvelRepository {
@@ -13,6 +15,10 @@ class MarvelRepository {
         val response = MarvelNetwork().getCharacter(characterId)
         val response2 = response.data.results
         return if (response2.isNotEmpty()) response2[0] else throw NoCharacterException()
+    }
+
+    suspend fun getComic(comicId: Int): Comic {
+        return MarvelNetwork().getComic(comicId).data.results.first()
     }
 }
 

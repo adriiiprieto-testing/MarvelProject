@@ -51,16 +51,24 @@ class CharacterListFragment : BaseFragment<CharacterListState, CharacterListView
             binding.fragmentCharacterListSpinner.adapter = spinnerAdapter
         }
 
-        binding.fragmentCharacterListSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-                if (pos == 0) {
-                    vm.onActionChangeSpinnerValue(20.toString())
-                } else {
-                    vm.onActionChangeSpinnerValue(parent.getItemAtPosition(pos).toString())
-                }
-            }
+        setSpinnerListener(true)
+    }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+    private fun setSpinnerListener(selectable: Boolean) {
+        if (selectable) {
+            binding.fragmentCharacterListSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+                    if (pos == 0) {
+                        vm.onActionChangeSpinnerValue(20.toString())
+                    } else {
+                        vm.onActionChangeSpinnerValue(parent.getItemAtPosition(pos).toString())
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        } else {
+            binding.fragmentCharacterListSpinner.onItemSelectedListener = null
         }
     }
 
@@ -68,7 +76,11 @@ class CharacterListFragment : BaseFragment<CharacterListState, CharacterListView
      * State management functions
      */
     override fun onNormal(data: CharacterListState) {
+        setSpinnerListener(false)
         mAdapter.updateList(data.characterList)
+        val list = resources.getStringArray(R.array.fragment_character_list_spinner_array)
+        binding.fragmentCharacterListSpinner.setSelection(list.indexOf(data.limit.toString()))
+        setSpinnerListener(true)
     }
 
     override fun onLoading(dataLoading: BaseExtraData?) {
