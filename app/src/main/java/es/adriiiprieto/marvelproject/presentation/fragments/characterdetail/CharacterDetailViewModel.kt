@@ -13,12 +13,12 @@ class CharacterDetailViewModel : BaseViewModel<CharacterDetailState>() {
 
 
     fun requestInformation(characterId: Int) {
-        updateToLoadingState(CharacterDetailState(null))
+        updateToLoadingState()
         executeCoroutines({
             val response = MarvelRepository().getCharacter(characterId)
             updateToNormalState(CharacterDetailState(response))
         }, { error ->
-            updateToErrorState(CharacterDetailState(null), error)
+            updateToErrorState(error)
         })
     }
 

@@ -6,5 +6,6 @@ import java.io.Serializable
 
 data class CharacterListState(
     val characterList: List<Character> = listOf(),
-    val limit: Int = 20
+    val limit: Int = 20,
+    val character: Character? = null
 ) : BaseViewState()

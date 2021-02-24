@@ -35,24 +35,34 @@ abstract class BaseViewModel<VS : BaseViewState> : ViewModel() {
      * State management
      */
     fun updateToNormalState(viewState: VS) {
+        updateView(BaseState.Normal(viewState))
+    }
+
+    fun updateDataState(viewState: VS) {
         baseState = BaseState.Normal(viewState)
-        observableState.postValue(baseState)
     }
 
-    fun updateToLoadingState(viewState: VS, loadingData: BaseExtraData? = null) {
-        baseState = BaseState.Loading(viewState, loadingData)
-        observableState.postValue(baseState)
+    fun updateToLoadingState(loadingData: BaseExtraData? = null) {
+        baseState?.let {
+            updateView(BaseState.Loading(it.data, loadingData))
+        } ?: updateView(BaseState.Loading(defaultState, loadingData))
     }
 
-    fun updateToErrorState(viewState: VS, errorData: Throwable = Throwable()) {
-        baseState = BaseState.Error(viewState, errorData)
-        observableState.postValue(baseState)
+    fun updateToErrorState(errorData: Throwable = Throwable()) {
+        baseState?.let {
+            updateView(BaseState.Error(it.data, errorData))
+        } ?: updateView(BaseState.Error(defaultState, errorData))
     }
 
     fun <T> checkDataState(checkDataStateFunction: (VS) -> T): T {
         return baseState?.let {
             checkDataStateFunction(it.data)
         } ?: checkDataStateFunction(defaultState)
+    }
+
+    private fun updateView(state: BaseState<VS>){
+        baseState = state
+        observableState.postValue(baseState)
     }
 
     /**
