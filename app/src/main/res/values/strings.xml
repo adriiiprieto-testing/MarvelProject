@@ -4,6 +4,9 @@
     <string name="CharacterDetailFragmentTabTitleSeries">Series</string>
     <string name="CharacterDetailFragmentTabTitleStories">Stories</string>
     <string name="itemCurriculumButtonSeeText">VER</string>
+    <string name="comicDetailFragmentTextNoTitle">Sin título</string>
+    <string name="comicDetailFragmentTextDescriptionNotAvailable">Descripción no disponible</string>
+    <string name="comicDetailFragmentTextErrorMessage">Hubo un error al solicitar la información: \n %s</string>
 
     <string-array name="fragment_character_list_spinner_array">
         <item>Selecciona el límite</item>

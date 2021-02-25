@@ -1,9 +1,11 @@
 package es.adriiiprieto.marvelproject.presentation.fragments.comicdetail
 
-import android.util.Log
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
+import es.adriiiprieto.marvelproject.R
 import es.adriiiprieto.marvelproject.base.BaseExtraData
 import es.adriiiprieto.marvelproject.base.BaseFragment
 import es.adriiiprieto.marvelproject.databinding.ComicDetailFragmentBinding
@@ -14,21 +16,31 @@ class ComicDetailFragment : BaseFragment<ComicDetailState, ComicDetailViewModel,
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> ComicDetailFragmentBinding = ComicDetailFragmentBinding::inflate
 
-    private val args: ComicDetailFragmentArgs by navArgs()
+    lateinit var myViewModel: ComicDetailViewModel
+
+    val args: ComicDetailFragmentArgs by navArgs()
 
     override fun setupView(viewModel: ComicDetailViewModel) {
-        Log.e("Mis argumentos", args.comicId.toString())
+        myViewModel = viewModel
+
+        myViewModel.requestInformation(args.comicId)
     }
 
     override fun onNormal(data: ComicDetailState) {
+        binding.comicDetailFragmentProgressBar.visibility = View.GONE
+        binding.comicDetailFragmentTextDescription.setTextColor(Color.BLACK)
 
+        binding.comicDetailFragmentTextViewName.text = data.comic?.title ?: getString(R.string.comicDetailFragmentTextNoTitle)
+        binding.comicDetailFragmentTextDescription.text = data.comic?.description ?: getString(R.string.comicDetailFragmentTextDescriptionNotAvailable)
     }
 
     override fun onLoading(dataLoading: BaseExtraData?) {
-
+        binding.comicDetailFragmentProgressBar.visibility = View.VISIBLE
     }
 
     override fun onError(dataError: Throwable) {
-
+        binding.comicDetailFragmentTextDescription.setTextColor(Color.RED)
+        binding.comicDetailFragmentTextDescription.text = getString(R.string.comicDetailFragmentTextErrorMessage, dataError.toString())
     }
+
 }
