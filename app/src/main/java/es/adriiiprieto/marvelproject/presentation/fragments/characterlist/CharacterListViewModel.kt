@@ -1,9 +1,12 @@
 package es.adriiiprieto.marvelproject.presentation.fragments.characterlist
 
+import dagger.hilt.android.lifecycle.HiltViewModel
 import es.adriiiprieto.marvelproject.base.BaseViewModel
 import es.adriiiprieto.marvelproject.data.MarvelRepository
+import javax.inject.Inject
 
-class CharacterListViewModel : BaseViewModel<CharacterListState>() {
+@HiltViewModel
+class CharacterListViewModel @Inject constructor(private val repository: MarvelRepository) : BaseViewModel<CharacterListState>() {
 
     override val defaultState: CharacterListState = CharacterListState()
 
@@ -16,7 +19,7 @@ class CharacterListViewModel : BaseViewModel<CharacterListState>() {
 
         checkDataState { state ->
             executeCoroutines({
-                val response = MarvelRepository().getAllCharacters(state.limit)
+                val response = repository.getAllCharacters(state.limit)
                 updateToNormalState(state.copy(characterList = response))
             }, { error ->
                 updateToErrorState(error)
