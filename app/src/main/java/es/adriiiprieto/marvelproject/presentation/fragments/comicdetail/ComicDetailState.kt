@@ -5,4 +5,4 @@ import es.adriiiprieto.marvelproject.data.model.Comic
 
 data class ComicDetailState(
     val comic: Comic? = null
-): BaseViewState()
+) : BaseViewState()
