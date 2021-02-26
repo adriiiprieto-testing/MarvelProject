@@ -2,7 +2,7 @@ package es.adriiiprieto.marvelproject.presentation.fragments.characterlist
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import es.adriiiprieto.marvelproject.base.BaseViewModel
-import es.adriiiprieto.marvelproject.data.MarvelRepository
+import es.adriiiprieto.marvelproject.domain.repository.MarvelRepository
 import javax.inject.Inject
 
 @HiltViewModel

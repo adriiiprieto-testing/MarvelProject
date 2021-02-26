@@ -2,7 +2,8 @@ package es.adriiiprieto.marvelproject.presentation.fragments.characterdetail
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import es.adriiiprieto.marvelproject.base.BaseViewModel
-import es.adriiiprieto.marvelproject.data.MarvelRepository
+import es.adriiiprieto.marvelproject.base.util.NetworkManager
+import es.adriiiprieto.marvelproject.domain.repository.MarvelRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,6 +18,7 @@ class CharacterDetailViewModel @Inject constructor(private val repository: Marve
 
     fun requestInformation(characterId: Int) {
         updateToLoadingState()
+
         executeCoroutines({
             val response = repository.getCharacter(characterId)
             updateToNormalState(CharacterDetailState(response))

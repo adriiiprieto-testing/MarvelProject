@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import es.adriiiprieto.marvelproject.data.model.Item
+import es.adriiiprieto.marvelproject.data.marvel.model.Item
 import es.adriiiprieto.marvelproject.databinding.FragmentCurriculumBinding
 
 @AndroidEntryPoint

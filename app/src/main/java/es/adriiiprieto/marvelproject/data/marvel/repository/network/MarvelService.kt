@@ -1,8 +1,8 @@
-package es.adriiiprieto.marvelproject.data.network
+package es.adriiiprieto.marvelproject.data.marvel.repository.network
 
-import es.adriiiprieto.marvelproject.data.model.ResponseAllCharactersDataModel
-import es.adriiiprieto.marvelproject.data.model.ResponseCharacterDataModel
-import es.adriiiprieto.marvelproject.data.model.ResponseGetComicDataModel
+import es.adriiiprieto.marvelproject.data.marvel.model.ResponseAllCharactersDataModel
+import es.adriiiprieto.marvelproject.data.marvel.model.ResponseCharacterDataModel
+import es.adriiiprieto.marvelproject.data.marvel.model.ResponseGetComicDataModel
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
