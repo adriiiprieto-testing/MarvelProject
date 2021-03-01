@@ -1,9 +1,12 @@
 package es.adriiiprieto.marvelproject.presentation.fragments.comicdetail
 
+import dagger.hilt.android.lifecycle.HiltViewModel
 import es.adriiiprieto.marvelproject.base.BaseViewModel
-import es.adriiiprieto.marvelproject.data.MarvelRepository
+import es.adriiiprieto.marvelproject.domain.repository.MarvelRepository
+import javax.inject.Inject
 
-class ComicDetailViewModel : BaseViewModel<ComicDetailState>() {
+@HiltViewModel
+class ComicDetailViewModel @Inject constructor(private val repository: MarvelRepository) : BaseViewModel<ComicDetailState>() {
 
     override val defaultState: ComicDetailState = ComicDetailState()
 
@@ -16,7 +19,7 @@ class ComicDetailViewModel : BaseViewModel<ComicDetailState>() {
 
         executeCoroutines({
 
-            val comic = MarvelRepository().getComic(id)
+            val comic = repository.getComic(id)
             updateToNormalState(ComicDetailState(comic))
 
         }, { error ->

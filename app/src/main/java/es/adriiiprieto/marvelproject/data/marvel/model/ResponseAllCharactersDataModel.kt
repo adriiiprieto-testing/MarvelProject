@@ -1,4 +1,4 @@
-package es.adriiiprieto.marvelproject.data.model
+package es.adriiiprieto.marvelproject.data.marvel.model
 
 data class ResponseAllCharactersDataModel(
     val attributionHTML: String,
