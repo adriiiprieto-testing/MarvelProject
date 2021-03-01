@@ -2,8 +2,14 @@ package es.adriiiprieto.marvelproject.presentation.fragments.comicdetail
 
 import es.adriiiprieto.marvelproject.base.BaseViewModel
 import es.adriiiprieto.marvelproject.domain.repository.MarvelRepository
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class ComicDetailViewModel(private val repository: MarvelRepository) : BaseViewModel<ComicDetailState>() {
+@KoinApiExtension
+class ComicDetailViewModel : BaseViewModel<ComicDetailState>(), KoinComponent {
+
+    private val repository by inject<MarvelRepository>()
 
     override val defaultState: ComicDetailState = ComicDetailState()
 

@@ -9,8 +9,10 @@ import es.adriiiprieto.marvelproject.R
 import es.adriiiprieto.marvelproject.base.BaseExtraData
 import es.adriiiprieto.marvelproject.base.BaseFragment
 import es.adriiiprieto.marvelproject.databinding.ComicDetailFragmentBinding
+import org.koin.core.component.KoinApiExtension
 
 
+@KoinApiExtension
 class ComicDetailFragment : BaseFragment<ComicDetailState, ComicDetailViewModel, ComicDetailFragmentBinding>() {
 
     override val viewModelClass: Class<ComicDetailViewModel> = ComicDetailViewModel::class.java

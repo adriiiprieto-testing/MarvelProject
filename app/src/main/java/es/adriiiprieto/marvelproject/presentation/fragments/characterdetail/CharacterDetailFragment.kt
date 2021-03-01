@@ -12,8 +12,10 @@ import es.adriiiprieto.marvelproject.base.BaseExtraData
 import es.adriiiprieto.marvelproject.base.BaseFragment
 import es.adriiiprieto.marvelproject.data.marvel.repository.NoCharacterException
 import es.adriiiprieto.marvelproject.databinding.CharacterDetailFragmentBinding
+import org.koin.core.component.KoinApiExtension
 
 
+@KoinApiExtension
 class CharacterDetailFragment : BaseFragment<CharacterDetailState, CharacterDetailViewModel, CharacterDetailFragmentBinding>() {
 
     /**

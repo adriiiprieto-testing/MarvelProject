@@ -13,6 +13,8 @@ buildscript {
         // in the individual module build.gradle files
 
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.3"
+
+        classpath "org.koin:koin-gradle-plugin:2.2.2"
     }
 }
 

@@ -2,8 +2,14 @@ package es.adriiiprieto.marvelproject.presentation.fragments.characterlist
 
 import es.adriiiprieto.marvelproject.base.BaseViewModel
 import es.adriiiprieto.marvelproject.domain.repository.MarvelRepository
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class CharacterListViewModel(private val repository: MarvelRepository) : BaseViewModel<CharacterListState>() {
+@KoinApiExtension
+class CharacterListViewModel : BaseViewModel<CharacterListState>(), KoinComponent {
+
+    private val repository by inject<MarvelRepository>()
 
     override val defaultState: CharacterListState = CharacterListState()
 

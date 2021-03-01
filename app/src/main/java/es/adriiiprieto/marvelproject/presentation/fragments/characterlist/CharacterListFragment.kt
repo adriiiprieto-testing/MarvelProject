@@ -12,8 +12,10 @@ import es.adriiiprieto.marvelproject.R
 import es.adriiiprieto.marvelproject.base.BaseExtraData
 import es.adriiiprieto.marvelproject.base.BaseFragment
 import es.adriiiprieto.marvelproject.databinding.FragmentCharacterListBinding
+import org.koin.core.component.KoinApiExtension
 
 
+@KoinApiExtension
 class CharacterListFragment : BaseFragment<CharacterListState, CharacterListViewModel, FragmentCharacterListBinding>() {
 
     /**
