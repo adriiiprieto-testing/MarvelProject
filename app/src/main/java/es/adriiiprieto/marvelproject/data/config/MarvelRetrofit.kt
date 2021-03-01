@@ -10,9 +10,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
-class MarvelRetrofit @Inject constructor(private val networkManager: NetworkManager) {
+class MarvelRetrofit(private val networkManager: NetworkManager) {
 
     fun loadRetrofit(): Retrofit {
         return Retrofit.Builder()
@@ -36,7 +35,7 @@ class MarvelRetrofit @Inject constructor(private val networkManager: NetworkMana
 
         // Check internet connectivity
         val checkInternetConnectivityInterceptor = Interceptor {
-            if(!networkManager.isNetworkAvailable()){
+            if (!networkManager.isNetworkAvailable()) {
                 throw NoInternetException()
             }
             it.proceed(it.request())

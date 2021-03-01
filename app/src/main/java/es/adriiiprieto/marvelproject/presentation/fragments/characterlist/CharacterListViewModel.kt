@@ -1,12 +1,9 @@
 package es.adriiiprieto.marvelproject.presentation.fragments.characterlist
 
-import dagger.hilt.android.lifecycle.HiltViewModel
 import es.adriiiprieto.marvelproject.base.BaseViewModel
 import es.adriiiprieto.marvelproject.domain.repository.MarvelRepository
-import javax.inject.Inject
 
-@HiltViewModel
-class CharacterListViewModel @Inject constructor(private val repository: MarvelRepository) : BaseViewModel<CharacterListState>() {
+class CharacterListViewModel(private val repository: MarvelRepository) : BaseViewModel<CharacterListState>() {
 
     override val defaultState: CharacterListState = CharacterListState()
 

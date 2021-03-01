@@ -1,13 +1,11 @@
 package es.adriiiprieto.marvelproject.data.marvel.repository
 
-import android.util.Log
 import es.adriiiprieto.marvelproject.data.marvel.model.Character
 import es.adriiiprieto.marvelproject.data.marvel.model.Comic
 import es.adriiiprieto.marvelproject.data.marvel.repository.network.MarvelNetwork
 import es.adriiiprieto.marvelproject.domain.repository.MarvelRepository
-import javax.inject.Inject
 
-class MarvelRepositoryImpl @Inject constructor(private val network: MarvelNetwork) : MarvelRepository {
+class MarvelRepositoryImpl(private val network: MarvelNetwork) : MarvelRepository {
 
     override suspend fun getAllCharacters(limit: Int): List<Character> {
         return network.getAllCharacters(limit).data.results

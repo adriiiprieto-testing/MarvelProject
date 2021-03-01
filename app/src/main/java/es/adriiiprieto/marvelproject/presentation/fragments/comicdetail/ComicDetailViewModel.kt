@@ -1,12 +1,9 @@
 package es.adriiiprieto.marvelproject.presentation.fragments.comicdetail
 
-import dagger.hilt.android.lifecycle.HiltViewModel
 import es.adriiiprieto.marvelproject.base.BaseViewModel
 import es.adriiiprieto.marvelproject.domain.repository.MarvelRepository
-import javax.inject.Inject
 
-@HiltViewModel
-class ComicDetailViewModel @Inject constructor(private val repository: MarvelRepository) : BaseViewModel<ComicDetailState>() {
+class ComicDetailViewModel(private val repository: MarvelRepository) : BaseViewModel<ComicDetailState>() {
 
     override val defaultState: ComicDetailState = ComicDetailState()
 
