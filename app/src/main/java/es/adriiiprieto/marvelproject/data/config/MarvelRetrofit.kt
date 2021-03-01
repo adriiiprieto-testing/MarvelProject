@@ -44,8 +44,8 @@ class MarvelRetrofit @Inject constructor(private val networkManager: NetworkMana
         builder.addInterceptor(checkInternetConnectivityInterceptor)
 
         // App token
-        val hash = ((System.currentTimeMillis() / 1000).toString() + BuildConfig.PRIVATE_KEY + BuildConfig.PUBLIC_KEY).toMD5()
         builder.addInterceptor { chain ->
+            val hash = ((System.currentTimeMillis() / 1000).toString() + BuildConfig.PRIVATE_KEY + BuildConfig.PUBLIC_KEY).toMD5()
             var request = chain.request()
             val url = request.url.newBuilder()
                 .addQueryParameter("apikey", BuildConfig.PUBLIC_KEY)
