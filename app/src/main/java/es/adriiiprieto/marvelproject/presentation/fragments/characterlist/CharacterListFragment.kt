@@ -8,13 +8,14 @@ import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import dagger.hilt.android.AndroidEntryPoint
 import es.adriiiprieto.marvelproject.R
 import es.adriiiprieto.marvelproject.base.BaseExtraData
 import es.adriiiprieto.marvelproject.base.BaseFragment
 import es.adriiiprieto.marvelproject.databinding.FragmentCharacterListBinding
+import org.koin.core.component.KoinApiExtension
 
-@AndroidEntryPoint
+
+@KoinApiExtension
 class CharacterListFragment : BaseFragment<CharacterListState, CharacterListViewModel, FragmentCharacterListBinding>() {
 
     /**

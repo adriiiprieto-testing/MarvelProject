@@ -3,10 +3,9 @@ package es.adriiiprieto.marvelproject.presentation
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import dagger.hilt.android.AndroidEntryPoint
 import es.adriiiprieto.marvelproject.databinding.ActivityMainBinding
 
-@AndroidEntryPoint
+
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding

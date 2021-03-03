@@ -1,12 +1,15 @@
 package es.adriiiprieto.marvelproject.presentation.fragments.characterlist
 
-import dagger.hilt.android.lifecycle.HiltViewModel
 import es.adriiiprieto.marvelproject.base.BaseViewModel
 import es.adriiiprieto.marvelproject.domain.repository.MarvelRepository
-import javax.inject.Inject
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-@HiltViewModel
-class CharacterListViewModel @Inject constructor(private val repository: MarvelRepository) : BaseViewModel<CharacterListState>() {
+@KoinApiExtension
+class CharacterListViewModel : BaseViewModel<CharacterListState>(), KoinComponent {
+
+    private val repository by inject<MarvelRepository>()
 
     override val defaultState: CharacterListState = CharacterListState()
 

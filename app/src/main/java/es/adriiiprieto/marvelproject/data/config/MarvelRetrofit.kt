@@ -10,9 +10,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
-class MarvelRetrofit @Inject constructor(private val networkManager: NetworkManager) {
+class MarvelRetrofit(private val networkManager: NetworkManager) {
 
     fun loadRetrofit(): Retrofit {
         return Retrofit.Builder()
@@ -36,7 +35,7 @@ class MarvelRetrofit @Inject constructor(private val networkManager: NetworkMana
 
         // Check internet connectivity
         val checkInternetConnectivityInterceptor = Interceptor {
-            if(!networkManager.isNetworkAvailable()){
+            if (!networkManager.isNetworkAvailable()) {
                 throw NoInternetException()
             }
             it.proceed(it.request())
@@ -44,8 +43,8 @@ class MarvelRetrofit @Inject constructor(private val networkManager: NetworkMana
         builder.addInterceptor(checkInternetConnectivityInterceptor)
 
         // App token
-        val hash = ((System.currentTimeMillis() / 1000).toString() + BuildConfig.PRIVATE_KEY + BuildConfig.PUBLIC_KEY).toMD5()
         builder.addInterceptor { chain ->
+            val hash = ((System.currentTimeMillis() / 1000).toString() + BuildConfig.PRIVATE_KEY + BuildConfig.PUBLIC_KEY).toMD5()
             var request = chain.request()
             val url = request.url.newBuilder()
                 .addQueryParameter("apikey", BuildConfig.PUBLIC_KEY)

@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
-import dagger.hilt.android.AndroidEntryPoint
 import es.adriiiprieto.marvelproject.R
 import es.adriiiprieto.marvelproject.base.BaseExtraData
 import es.adriiiprieto.marvelproject.base.BaseFragment
 import es.adriiiprieto.marvelproject.databinding.ComicDetailFragmentBinding
+import org.koin.core.component.KoinApiExtension
 
-@AndroidEntryPoint
+
+@KoinApiExtension
 class ComicDetailFragment : BaseFragment<ComicDetailState, ComicDetailViewModel, ComicDetailFragmentBinding>() {
 
     override val viewModelClass: Class<ComicDetailViewModel> = ComicDetailViewModel::class.java

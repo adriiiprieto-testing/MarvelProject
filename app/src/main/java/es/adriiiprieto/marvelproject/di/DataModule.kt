@@ -1,47 +1,32 @@
 package es.adriiiprieto.marvelproject.di
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import android.content.Context
+import es.adriiiprieto.marvelproject.base.util.NetworkManager
 import es.adriiiprieto.marvelproject.data.config.MarvelRetrofit
 import es.adriiiprieto.marvelproject.data.marvel.repository.MarvelRepositoryImpl
 import es.adriiiprieto.marvelproject.data.marvel.repository.network.MarvelNetwork
 import es.adriiiprieto.marvelproject.data.marvel.repository.network.MarvelService
 import es.adriiiprieto.marvelproject.domain.repository.MarvelRepository
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
+import retrofit2.Retrofit
 
+val dataModule = module {
 
-@Module
-@InstallIn(SingletonComponent::class)
-object DataModule {
+    factory {
+        provideMarvelRepository(get())
+    }
 
-//    @Provides
-//    fun provideContext(@ApplicationContext context: Context): Context = context
-//
-//    @Provides
-//    fun networkManager(context: Context): NetworkManager = NetworkManager(context)
-//
-//    @Provides
-//    fun providesMarvelRetrofit(networkManager: NetworkManager): MarvelRetrofit = MarvelRetrofit(networkManager)
-//
-//    @Provides
-//    fun providesRetrofit(marvelRetrofit: MarvelRetrofit): Retrofit = marvelRetrofit.loadRetrofit()
-//
-//    @Provides
-//    fun provideMarvelService(retrofit: Retrofit): MarvelService = retrofit.create(MarvelService::class.java)
-//
-//    @Provides
-//    fun provideMarvelNetwork(service: MarvelService): MarvelNetwork = MarvelNetwork(service)
-//
-//    @Provides
-//    fun provideMarvelRepositoryImpl(marvelNetwork: MarvelNetwork): MarvelRepositoryImpl = MarvelRepositoryImpl(marvelNetwork)
-//
-//    @Provides
-//    fun provideMarvelRepository(repositoryImpl: MarvelRepositoryImpl): MarvelRepository = repositoryImpl
+    single {
+        provideRetrofit(androidContext())
+    }
 
+}
 
-    @Provides
-    fun provideMarvelRepository(retrofit: MarvelRetrofit): MarvelRepository = MarvelRepositoryImpl(MarvelNetwork(retrofit.loadRetrofit().create(MarvelService::class.java)))
+fun provideRetrofit(context: Context): Retrofit {
+    return MarvelRetrofit(NetworkManager(context)).loadRetrofit()
+}
 
-
+fun provideMarvelRepository(retrofit: Retrofit): MarvelRepository {
+    return MarvelRepositoryImpl(MarvelNetwork(retrofit.create(MarvelService::class.java)))
 }
